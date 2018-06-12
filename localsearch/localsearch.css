@@ -1,0 +1,24 @@
+.u-center {
+    text-align: center;
+}
+
+.u-copyright {
+    font-size: 8pt;
+    color: silver;
+}
+
+.offset-by-one-and-half {
+    margin-left: 17%;
+}
+
+.u-copyright > a {
+    color: silver;
+}
+
+.u-copyright > a:hover {
+    color: silver;
+}
+
+.u-space-after {
+    margin-bottom: 10pt;
+}

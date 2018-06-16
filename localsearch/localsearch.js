@@ -1,4 +1,31 @@
 
+var SearchEngine = function (name, url) {
+  this.name = name;
+  this.url = url;
+  this.navigate = function (text) {
+    console.log("searching " + this.name + ": '" + text + "' ....");
+    var redirectUrl = this.url + encodeURIComponent(text);
+    console.log(redirectUrl);
+    //location.href = redirectUrl;
+  };
+  this.getComponent = function(app) { 
+    return Vue.component('search-' + this.name, {
+      data: function() {
+          return {
+            name: this.name
+          }
+      },
+      methods: {
+        activate: function() {
+          this.navigate(this.app.text);
+        }
+      },
+      template: '<div class="three columns"><input class="u-full-width" value="{{ name }}" type="button" v-on:click="activate"/></div>'
+    });
+  }
+  return this;
+}
+
 var parseParams = function() {
   params = location.hash;
   res = {}
@@ -23,7 +50,8 @@ var openSearch = function(url, text) {
   var site = url.split("/")[2];
   console.log("searching " + site + ": '" + text + "' ....");
   var redirectUrl = url + encodeURIComponent(text);
-  location.href = redirectUrl;
+  console.log(redirectUrl);
+  //location.href = redirectUrl;
 }
 
 var params = parseParams();

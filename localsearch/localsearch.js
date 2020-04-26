@@ -38,6 +38,9 @@ var app = new Vue({
   data: {
     text: queryString
   },
+  mounted: function () {
+    this.$refs.searchText.focus();
+  },
   methods: {
     searchByEnter: function(e) {
       if (e.keyCode === 13) {

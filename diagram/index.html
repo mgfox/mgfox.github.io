@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Diagram Editor</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <script src="js/lib/mermaid.min.js"></script>
+  <script></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row" style="margin-top: 5%">
+      <div class="six columns">
+        <textarea class="u-full-width" placeholder="diagram source ..." id="edtDiagram" style="height: 80%; font-family: Courier New; font-size: 10pt;">
+sequenceDiagram
+    Alice->>+John: Hello John, how are you?
+    Alice->>+John: John, can you hear me?
+    John-->>-Alice: Hi Alice, I can hear you!
+    John-->>-Alice: I feel great!
+        </textarea>
+      </div>
+      <div class="six columns mermaid" id="pnlDiagram"></div>
+    </div>
+    <div class="row">
+      <div class="ten colums"><span style="font-size: 8pt; color: silver;">made with: <a style="color: silver; text-decoration: none" href="https://mermaid-js.github.io/mermaid/#/">https://mermaid-js.github.io/mermaid/#/</a></span></div>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

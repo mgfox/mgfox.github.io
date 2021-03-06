@@ -1,0 +1,76 @@
+<html>
+<body>
+
+<audio id="player" controls></audio>
+
+<span id="pnlInfo">... info ....</span>
+<br/>
+<canvas id="pnlVis" width="1000" height="100"></canvas>
+
+
+<script>
+  var pnlInfo = document.getElementById("pnlInfo");
+  var pnlVis = document.getElementById("pnlVis");
+  var xPos = 0; 
+
+  var floatToCoord = function(f) {
+    return f * 50;
+  }
+
+  var drawSound = function(data) {
+    var ctx = pnlVis.getContext('2d');
+    if (xPos > 1000) {
+        xPos = 0;
+    }
+    ctx.beginPath();
+    ctx.strokeStyle = 'red';
+    ctx.moveTo(xPos + 1, 46);
+    ctx.lineTo(xPos + 9, 50);
+    ctx.lineTo(xPos + 1, 54);
+    ctx.lineTo(xPos + 1, 46);
+    ctx.stroke();
+    ctx.clearRect(xPos, 0, 1, 100);
+    ctx.beginPath();
+    ctx.strokeStyle = 'blue';
+    var total = 0.0;
+    var mn = 0.0, mx = 0.0;
+    data.forEach(function(f) {
+        if (mn > f) mn = f;
+        if (mx < f) mx = f;
+    });
+    var vn = floatToCoord(mn) + 50;
+    ctx.moveTo(xPos, vn);
+    var vx = floatToCoord(mx) + 50;
+    ctx.lineTo(xPos, vx);
+    ctx.stroke();
+    xPos = xPos + 1;
+  }
+
+  const handleSuccess = function(stream) {
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const source = context.createMediaStreamSource(stream);
+    const processor = context.createScriptProcessor(512, 1, 1);
+
+    source.connect(processor);
+    processor.connect(context.destination);
+    var idx = 0;
+
+    processor.onaudioprocess = function(e) {
+      // Do something with the data, e.g. convert it to WAV
+      var data = e.inputBuffer.getChannelData(0);
+      if (idx < 100) {
+        //console.log(data);
+        idx = idx + 1;
+      }
+      drawSound(data);
+      pnlInfo.innerText = e.inputBuffer.duration;
+      //console.log(e.inputrBuffer.getChannelData(0));
+    };
+  };
+
+  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+      .then(handleSuccess);
+</script>
+
+</body>
+</html>
